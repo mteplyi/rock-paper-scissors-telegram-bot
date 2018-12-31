@@ -1,0 +1,19 @@
+{
+  "author": "RedGeekPanda",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src",
+    "start:dev": "node src --inspect"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint ."
+    }
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "husky": "^1.3.1"
+  }
+}

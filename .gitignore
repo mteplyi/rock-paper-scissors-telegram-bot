@@ -1,0 +1,17 @@
+# IDEs and editors
+.idea/*
+!.idea/codeStyles
+!.idea/dictionaries
+
+# Logs
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules
+
+# Environment variables
+.env
+
+# Misc
+.directory
