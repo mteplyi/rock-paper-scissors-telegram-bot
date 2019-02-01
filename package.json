@@ -9,9 +9,9 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@google-cloud/firestore": "^0.21.0",
+    "@google-cloud/firestore": "^1.0.1",
     "dotenv": "^6.1.0",
-    "telegraf": "3.26.0"
+    "telegraf": "3.27.0"
   },
   "devDependencies": {
     "eslint": "^5.12.1",

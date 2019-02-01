@@ -3,9 +3,7 @@ const Firestore = require('@google-cloud/firestore');
 
 // Firestore.setLogFunction(console.log);
 
-const db = new Firestore({
-  timestampsInSnapshots: true,
-});
+const db = new Firestore();
 
 const gamesRef = db.collection('games');
 
