@@ -35,8 +35,7 @@ bot.options.username = 'rpsgbot';
 
 bot
 // .use((ctx, next) => {
-//   console.log(ctx);
-//   return next();
+//   next();
 // })
   .on('inline_query', handleInlineQuery)
   .command('play', handlePlayCommand)
