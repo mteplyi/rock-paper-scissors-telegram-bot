@@ -1,0 +1,6 @@
+runtime: nodejs10
+
+env_variables:
+  BOT_TOKEN:
+  WEBHOOK_ORIGIN:
+  WEBHOOK_PATHNAME:

@@ -1,3 +1,5 @@
 #!include:.gitignore
-.*
-!.env
+.idea
+.env.example
+.eslint.js
+.gitignore

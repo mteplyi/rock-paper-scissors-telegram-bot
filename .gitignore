@@ -13,6 +13,7 @@ node_modules
 # Environment variables
 .env
 .iam.json
+app.yaml
 
 # Misc
 .directory
