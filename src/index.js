@@ -37,6 +37,11 @@ bot
 // .use((ctx, next) => {
 //   next();
 // })
+  .hears('echo', async (ctx) => {
+    console.time('echo');
+    await ctx.reply('echo');
+    console.timeEnd('echo');
+  })
   .on('inline_query', handleInlineQuery)
   .command('play', handlePlayCommand)
   .action([ROCK_CODE, PAPER_CODE, SCISSORS_CODE], handleHand)
