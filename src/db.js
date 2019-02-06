@@ -1,9 +1,20 @@
+require('dotenv/config');
+
 /** @type {FirebaseFirestore.Firestore} */
 const Firestore = require('@google-cloud/firestore');
 
-// Firestore.setLogFunction(console.log);
+const {
+  GAE_APPLICATION,
+  GOOGLE_APPLICATION_CREDENTIALS,
+  GOOGLE_CLOUD_PROJECT,
+} = process.env;
 
-const db = new Firestore();
+const db = GAE_APPLICATION
+  ? new Firestore()
+  : new Firestore({
+    keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+    projectId: GOOGLE_CLOUD_PROJECT,
+  });
 
 const gamesRef = db.collection('games');
 
