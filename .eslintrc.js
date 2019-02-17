@@ -6,9 +6,11 @@ module.exports = {
   },
   rules: {
     'arrow-parens': ['error', 'always'],
-    'linebreak-style': ['error', 'unix'],
     'newline-per-chained-call': 'off',
     'no-console': 'off',
+    'no-extra-parens': ['error', 'all'],
+    'no-mixed-operators': 'off',
     'no-plusplus': 'off',
+    'no-restricted-syntax': 'off',
   },
 };

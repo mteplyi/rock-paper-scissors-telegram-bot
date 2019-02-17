@@ -2,10 +2,12 @@
   <dictionary name="redgeekpanda">
     <words>
       <w>datastore</w>
+      <w>emojis</w>
       <w>gitignore</w>
       <w>nodemon</w>
       <w>rpsgbot</w>
       <w>telegraf</w>
+      <w>warmup</w>
       <w>webhook</w>
     </words>
   </dictionary>

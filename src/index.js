@@ -1,55 +1,51 @@
 require('dotenv/config');
 const Telegraf = require('telegraf');
+const Koa = require('koa');
+const koaBody = require('koa-body');
 
 const {
-  ROCK_CODE,
-  PAPER_CODE,
-  SCISSORS_CODE,
+  HAND_CODES,
   STOP_CODE,
 } = require('./constants');
-const handlePlayCommand = require('./handlers/handlePlayCommand');
-const handleHand = require('./handlers/handleHand');
-const handleStop = require('./handlers/handleStop');
 const handleInlineQuery = require('./handlers/handleInlineQuery');
-
-console.log(process.env);
+const handleChosenInlineResult = require('./handlers/handleChosenInlineResult');
+const handleHandAction = require('./handlers/handleHandAction');
+const handleStopAction = require('./handlers/handleStopAction');
 
 const {
+  NODE_ENV = 'development',
   BOT_TOKEN,
   PORT = 3040,
   WEBHOOK_ORIGIN,
   WEBHOOK_PATHNAME = '/',
 } = process.env;
-if (!BOT_TOKEN) {
-  throw new Error('Undefined BOT_TOKEN variable!');
-}
-if (!WEBHOOK_ORIGIN) {
-  throw new Error('Undefined WEBHOOK_ORIGIN variable!');
-}
-if (WEBHOOK_PATHNAME[0] !== '/') {
-  throw new Error('WEBHOOK_PATHNAME should begin with \'/\'');
-}
 
 const bot = new Telegraf(BOT_TOKEN);
 bot.options.username = 'rpsgbot';
 
-bot
-// .use((ctx, next) => {
-//   next();
-// })
-  .hears('echo', async (ctx) => {
-    console.time('echo');
-    await ctx.reply('echo');
-    console.timeEnd('echo');
-  })
-  .on('inline_query', handleInlineQuery)
-  .command('play', handlePlayCommand)
-  .action([ROCK_CODE, PAPER_CODE, SCISSORS_CODE], handleHand)
-  .action(STOP_CODE, handleStop)
-  .startWebhook(WEBHOOK_PATHNAME, null, PORT);
-
-const webhookUrl = WEBHOOK_ORIGIN + WEBHOOK_PATHNAME;
-bot.telegram.setWebhook(webhookUrl, null, 100)
-  .catch((e) => {
-    console.error(e);
+if (NODE_ENV === 'development') {
+  bot.use((ctx, next) => {
+    console.log(ctx);
+    return next();
   });
+}
+bot.on('inline_query', handleInlineQuery);
+bot.on('chosen_inline_result', handleChosenInlineResult);
+bot.action(HAND_CODES, handleHandAction);
+bot.action(STOP_CODE, handleStopAction);
+// bot.startWebhook(WEBHOOK_PATHNAME, null, PORT);
+
+const app = new Koa();
+app.use(koaBody());
+app.use((ctx, next) => {
+  console.log(ctx);
+  if (ctx.method === 'POST' || ctx.url === WEBHOOK_PATHNAME) {
+    return bot.handleUpdate(ctx.request.body, ctx.response);
+  }
+  if (ctx.method === 'GET' || ctx.url === '/_ah/warmup') {
+    const webhookUrl = WEBHOOK_ORIGIN + WEBHOOK_PATHNAME;
+    return bot.telegram.setWebhook(webhookUrl, null, 100);
+  }
+  return next();
+});
+app.listen(PORT);

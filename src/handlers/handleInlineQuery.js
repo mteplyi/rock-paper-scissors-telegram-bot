@@ -1,6 +1,5 @@
-const { inlineQueryResultsTemplate } = require('../templates');
+const templates = require('../templates');
 
-module.exports = async (ctx) => {
-  const [results, extra] = inlineQueryResultsTemplate();
-  await ctx.answerInlineQuery(results, extra);
+module.exports = (ctx) => {
+  ctx.answerInlineQuery(...templates.rendered.inlineQueryResults);
 };
